@@ -1,11 +1,11 @@
 .page-layout {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: safe center;
 
-  padding: 0 2rem;
+  padding: 2rem;
 
-  height: 100vh;
+  min-height: 100vh;
 }
 .page-layout .calculator {
   flex: 1;
