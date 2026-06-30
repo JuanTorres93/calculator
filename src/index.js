@@ -13,12 +13,14 @@ mainBody.appendChild(calculatorUI);
 function handleKeyboardInput(event) {
   const key = event.key;
 
-  // By default, some browsers open search menu when clicking '/', this prevents that behavior
-  if (event.key === '/') event.preventDefault();
-
   const validInput = mapToValidInput(key);
 
   if (!validInput) return;
+
+  // Prevents native browser side effects, e.g. '/' opening the quick-find
+  // menu, or Enter re-triggering a click on whichever button still has
+  // keyboard focus from a previous mouse click.
+  event.preventDefault();
 
   showButtonFeedback(validInput);
   processCalculatorInput(validInput);

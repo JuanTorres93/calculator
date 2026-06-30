@@ -106,6 +106,53 @@ export function createCalculatorUI() {
   );
 
   calculatorContainer.appendChild(buttonsContainer);
+  calculatorContainer.appendChild(createInstructions());
 
   return calculatorContainer;
+}
+
+const INSTRUCTIONS_ROWS = [
+  [
+    ['AC', 'clears everything'],
+    ['⌫', 'deletes the last digit'],
+    ['0-9', 'digits'],
+  ],
+  [
+    ['+ - * /', 'operators'],
+    ['Enter', 'equals'],
+    ['Backspace', 'deletes the last digit'],
+  ],
+  [
+    ['C', 'clears everything'],
+    ['.', 'decimal point'],
+    ['Note', 'numbers are rounded to 2 decimals'],
+  ],
+];
+
+function createInstructions() {
+  const table = document.createElement('table');
+  table.classList.add('calculator__instructions');
+  const tbody = document.createElement('tbody');
+
+  INSTRUCTIONS_ROWS.forEach((row) => {
+    const tr = document.createElement('tr');
+
+    row.forEach(([key, description]) => {
+      const td = document.createElement('td');
+
+      const strong = document.createElement('strong');
+      strong.textContent = key;
+
+      td.appendChild(strong);
+      td.appendChild(document.createTextNode(` ${description}`));
+
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+
+  return table;
 }

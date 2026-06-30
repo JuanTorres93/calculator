@@ -69,10 +69,32 @@
 .calculator_display{
   border: 2px solid var(--color-button-hover);
   border-radius: 2.2rem;
+  padding: 2rem;
   text-align: end;
   font-size: 5rem;
 }
 
 .span-2-columns {
   grid-column: span 2;
+}
+
+.calculator__instructions {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  border: 1px solid rgba(148, 163, 184, 0.2);
+
+  font-size: 1.3rem;
+  line-height: 1.6;
+  text-align: justify;
+  text-align-last: center;
+  color: #94a3b8;
+}
+.calculator__instructions td {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+.calculator__instructions strong {
+  color: var(--color-text);
 }
