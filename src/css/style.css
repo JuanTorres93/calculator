@@ -44,6 +44,16 @@
   background-color: var(--color-danger-hover);
 }
 
+.calculator-button--equals {
+  background: var(--color-button);
+  border: 2px solid var(--color-operator);
+  color: var(--color-operator);
+}
+.calculator-button--equals:hover,
+.calculator-button--equals.is-keyboard-pressed {
+  background-color: var(--color-button-hover);
+}
+
 .calculator {
   display: flex;
   flex-direction: column;
@@ -69,7 +79,7 @@
 
 .calculator__display {
   border: 2px solid var(--color-button-hover);
-  border-radius: 2.2rem;
+  border-radius: 1.5rem;
   padding: 2rem;
   text-align: end;
   font-size: var(--text-size-display);

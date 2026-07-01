@@ -11,6 +11,7 @@ import {
   mapToValidInput,
   multiplication,
   subtraction,
+  OPERATOR_SYMBOLS,
 } from './validOperations.js';
 
 export function createCalculatorUI() {
@@ -119,7 +120,7 @@ const INSTRUCTIONS_ROWS = [
     ['0-9', 'Digits'],
   ],
   [
-    ['+ - * /', 'Operators'],
+    [`${Object.values(OPERATOR_SYMBOLS).join(' ')}`, 'Operators'],
     ['Enter', 'Equals'],
     ['Backspace', 'Deletes the last digit'],
   ],

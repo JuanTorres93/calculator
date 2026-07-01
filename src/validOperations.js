@@ -53,3 +53,7 @@ export function isClear(value) {
 export function isDeleteLastInput(value) {
   return value === deleteLastInput;
 }
+
+export function isEquals(value) {
+  return value === equals;
+}

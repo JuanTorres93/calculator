@@ -2,6 +2,7 @@ import {
   isOperation,
   isClear,
   isDeleteLastInput,
+  isEquals,
   OPERATOR_SYMBOLS,
 } from './validOperations.js';
 
@@ -26,6 +27,9 @@ export function createCalculatorButton(
 
   if (isClear(calculatorValueString))
     button.classList.add('calculator-button--clear');
+
+  if (isEquals(calculatorValueString))
+    button.classList.add('calculator-button--equals');
 
   button.addEventListener('click', () => {
     onClick(calculatorValueString);
