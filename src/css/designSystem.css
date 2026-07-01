@@ -2,6 +2,7 @@
   --color-background: #182235;
 
   --color-calculator: #0f172a;
+  --color-display: #16233d;
 
   --color-button: #1f2937;
   --color-button-hover: #334155;
@@ -14,6 +15,6 @@
   --color-danger: #ef4444;
   --color-danger-hover: #f87171;
 
-  --text-size-display: 2.5rem;
+  --text-size-display: 5rem;
   --text-size-button: 3.75rem;
 }

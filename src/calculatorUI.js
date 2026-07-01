@@ -11,6 +11,7 @@ import {
   mapToValidInput,
   multiplication,
   subtraction,
+  OPERATOR_SYMBOLS,
 } from './validOperations.js';
 
 export function createCalculatorUI() {
@@ -20,18 +21,22 @@ export function createCalculatorUI() {
 
   calculatorContainer.classList.add('calculator');
   buttonsContainer.classList.add('calculator__buttons-container');
-  displayContainer.classList.add('calculator_display')
+  displayContainer.classList.add('calculator__display');
+
+  calculatorContainer.appendChild(displayContainer);
+  calculatorContainer.appendChild(buttonsContainer);
+  calculatorContainer.appendChild(createInstructions());
+
   // Display
-  // TODO IMPORTANT: import actual display once it is implemented
+
   const display = document.createElement('span');
-  display.textContent = '0';
   setDisplay(display);
+
+  display.textContent = '0';
+
   displayContainer.appendChild(display);
 
-  
-
   // Buttons
-  calculatorContainer.appendChild(displayContainer);
 
   buttonsContainer.appendChild(
     createCalculatorButton(clear, processCalculatorInput),
@@ -105,7 +110,51 @@ export function createCalculatorUI() {
     createCalculatorButton(equals, processCalculatorInput),
   );
 
-  calculatorContainer.appendChild(buttonsContainer);
-
   return calculatorContainer;
+}
+
+const INSTRUCTIONS_ROWS = [
+  [
+    ['AC', 'Clears everything'],
+    ['⌫', 'Deletes the last digit'],
+    ['0-9', 'Digits'],
+  ],
+  [
+    [`${Object.values(OPERATOR_SYMBOLS).join(' ')}`, 'Operators'],
+    ['Enter', 'Equals'],
+    ['Backspace', 'Deletes the last digit'],
+  ],
+  [
+    ['C', 'Clears everything'],
+    ['.', 'Decimal point'],
+    ['Note', '2 decimals shown'],
+  ],
+];
+
+function createInstructions() {
+  const table = document.createElement('table');
+  table.classList.add('calculator__instructions');
+  const tbody = document.createElement('tbody');
+
+  INSTRUCTIONS_ROWS.forEach((row) => {
+    const tr = document.createElement('tr');
+
+    row.forEach(([key, description]) => {
+      const td = document.createElement('td');
+
+      const strong = document.createElement('strong');
+      strong.textContent = key;
+
+      td.appendChild(strong);
+      td.appendChild(document.createTextNode(` ${description}`));
+
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+
+  return table;
 }
