@@ -10,6 +10,10 @@ let display = null;
 const MAX_DECIMALS = 2;
 const MAX_DISPLAY_DIGITS = 15;
 
+const BASE_FONT_SIZE_REM = 5;
+const MIN_FONT_SIZE_REM = 1.5;
+const FONT_SIZE_STEP_REM = 0.1;
+
 const ERROR_MESSAGES = {
   DIVIDE_BY_ZERO: [
     'Nice try 😏',
@@ -52,18 +56,42 @@ function updateDisplay(text) {
     return;
   }
 
-  let newText = text;
+  display.textContent = text;
+  fitDisplayFontSize();
+}
 
-  if (newText.length > MAX_DISPLAY_DIGITS) {
-    const newTextArray = newText.split('');
+function fitDisplayFontSize() {
+  const container = display.parentElement;
+  if (!container) return;
 
-    const numberOfExtraDigits = newTextArray.length - MAX_DISPLAY_DIGITS;
-    const removedDigits = newTextArray.splice(0, numberOfExtraDigits + 3);
+  display.style.fontSize = `${BASE_FONT_SIZE_REM}rem`;
 
-    newText = `...${newTextArray.join('')}`;
+  const containerStyle = getComputedStyle(container);
+  const availableWidth =
+    container.clientWidth -
+    parseFloat(containerStyle.paddingLeft) -
+    parseFloat(containerStyle.paddingRight);
+
+  let fontSize = BASE_FONT_SIZE_REM;
+
+  while (
+    display.scrollWidth > availableWidth &&
+    fontSize > MIN_FONT_SIZE_REM
+  ) {
+    fontSize = Math.max(MIN_FONT_SIZE_REM, fontSize - FONT_SIZE_STEP_REM);
+    display.style.fontSize = `${fontSize}rem`;
   }
+}
 
-  display.textContent = newText;
+function limitDigits(text) {
+  const digitCount = text.replace('.', '').length;
+  if (digitCount <= MAX_DISPLAY_DIGITS) return text;
+
+  const textArray = text.split('');
+  const numberOfExtraDigits = digitCount - MAX_DISPLAY_DIGITS;
+  textArray.splice(0, numberOfExtraDigits + 3);
+
+  return `...${textArray.join('')}`;
 }
 
 function clearDisplay() {
@@ -76,17 +104,41 @@ function showError(errorCode) {
 }
 
 function buildDisplayText(state) {
-  if (state.hasError || state.operator === null) {
+  if (state.hasError) {
     return formatDisplayValue(state.currentValue);
   }
 
+  if (state.operator === null) {
+    const isResult = state.waitingForSecondNumber;
+
+    return isResult
+      ? formatResultValue(state.currentValue)
+      : limitDigits(formatDisplayValue(state.currentValue));
+  }
+
   const operatorSymbol = getOperatorSymbol(state.operator);
-  const firstPart = formatDisplayValue(state.firstNumber.toString());
-  const currentPart = formatDisplayValue(state.currentValue);
+  const firstPart = limitDigits(
+    formatDisplayValue(state.firstNumber.toString()),
+  );
+  const currentPart = limitDigits(formatDisplayValue(state.currentValue));
 
   return state.waitingForSecondNumber
     ? `${firstPart} ${operatorSymbol}`
     : `${firstPart} ${operatorSymbol} ${currentPart}`;
+}
+
+function formatResultValue(stringValue) {
+  const number = Number(stringValue);
+
+  if (Number.isNaN(number)) return '0';
+
+  const integerDigitCount = Math.trunc(Math.abs(number)).toString().length;
+
+  if (integerDigitCount > MAX_DISPLAY_DIGITS) {
+    return number.toExponential(MAX_DECIMALS);
+  }
+
+  return formatDisplayValue(stringValue);
 }
 
 function formatDisplayValue(stringValue) {
@@ -97,6 +149,8 @@ function formatDisplayValue(stringValue) {
   const number = Number(stringValue);
 
   if (Number.isNaN(number)) return '0';
+
+  if (!hasDecimalPoint) return number.toString();
 
   const multiplier = 10 ** MAX_DECIMALS;
 

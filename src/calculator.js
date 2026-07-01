@@ -9,12 +9,18 @@ import {
   isDeleteLastInput,
 } from './validOperations.js';
 
+const MAX_INPUT_DIGITS = 15;
+
 let currentValue = '0';
 let firstNumber = null;
 let operator = null;
 let waitingForSecondNumber = false;
 let hasError = false;
 let errorCode = null;
+
+function countDigits(value) {
+  return value.replace(/[.-]/g, '').length;
+}
 
 export function getCurrentValue() {
   return currentValue;
@@ -34,6 +40,7 @@ export function inputDigit(digit) {
   if (waitingForSecondNumber || currentValue === '0') {
     currentValue = digit;
   } else {
+    if (countDigits(currentValue) >= MAX_INPUT_DIGITS) return;
     currentValue += digit;
   }
 

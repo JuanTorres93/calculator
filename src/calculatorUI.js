@@ -127,8 +127,14 @@ const INSTRUCTIONS_ROWS = [
   [
     ['C', 'Clears everything'],
     ['.', 'Decimal point'],
-    ['Note', '2 decimals shown'],
+    ['Space', 'Repeats the last digit'],
   ],
+  [
+    ['Decimals', '2 decimals shown'],
+    ['Digits', 'Numbers can have a maximum of 15 digits'],
+    ['Big numbers', 'Shown in scientific notation\nEg: 1.23e+9 means 1.23 * 10^9'],
+  ],
+
 ];
 
 function createInstructions() {
@@ -139,7 +145,7 @@ function createInstructions() {
   INSTRUCTIONS_ROWS.forEach((row) => {
     const tr = document.createElement('tr');
 
-    row.forEach(([key, description]) => {
+    row.forEach(([key, description, extraClass]) => {
       const td = document.createElement('td');
 
       const strong = document.createElement('strong');
