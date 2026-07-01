@@ -8,7 +8,7 @@ import {
 let display = null;
 
 const MAX_DECIMALS = 2;
-const MAX_DISPLAY_DIGITS = 10;
+const MAX_DISPLAY_DIGITS = 15;
 
 const ERROR_MESSAGES = {
   DIVIDE_BY_ZERO: [
@@ -51,7 +51,19 @@ function updateDisplay(text) {
     console.log('Display has not been initialized.');
     return;
   }
-  display.textContent = text;
+
+  let newText = text;
+
+  if (newText.length > MAX_DISPLAY_DIGITS) {
+    const newTextArray = newText.split('');
+
+    const numberOfExtraDigits = newTextArray.length - MAX_DISPLAY_DIGITS;
+    const removedDigits = newTextArray.splice(0, numberOfExtraDigits + 3);
+
+    newText = `...${newTextArray.join('')}`;
+  }
+
+  display.textContent = newText;
 }
 
 function clearDisplay() {
@@ -69,7 +81,7 @@ function buildDisplayText(state) {
   }
 
   const operatorSymbol = getOperatorSymbol(state.operator);
-  const firstPart = formatDisplayValue(state.firstNumber);
+  const firstPart = formatDisplayValue(state.firstNumber.toString());
   const currentPart = formatDisplayValue(state.currentValue);
 
   return state.waitingForSecondNumber
@@ -77,24 +89,27 @@ function buildDisplayText(state) {
     : `${firstPart} ${operatorSymbol} ${currentPart}`;
 }
 
-function formatDisplayValue(value) {
-  const number = Number(value);
+function formatDisplayValue(stringValue) {
+  if (stringValue === '' || stringValue === null) return '0';
+
+  const hasDecimalPoint = stringValue.includes('.');
+
+  const number = Number(stringValue);
+
+  if (Number.isNaN(number)) return '0';
 
   const multiplier = 10 ** MAX_DECIMALS;
 
-  const cleaned =
+  const rounded =
     Math.round((number + Number.EPSILON) * multiplier) / multiplier;
 
-  const digitCount = cleaned
-    .toString()
-    .replace('-', '')
-    .replace('.', '').length;
+  let result = rounded.toString();
 
-  if (digitCount <= MAX_DISPLAY_DIGITS) {
-    return cleaned.toString();
+  if (hasDecimalPoint && !result.includes('.')) {
+    result += '.';
   }
 
-  return Number(cleaned.toPrecision(MAX_DISPLAY_DIGITS)).toString();
+  return result;
 }
 
 function getOperatorSymbol(operator) {
