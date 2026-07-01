@@ -20,18 +20,22 @@ export function createCalculatorUI() {
 
   calculatorContainer.classList.add('calculator');
   buttonsContainer.classList.add('calculator__buttons-container');
-  displayContainer.classList.add('calculator_display')
+  displayContainer.classList.add('calculator__display');
+
+  calculatorContainer.appendChild(displayContainer);
+  calculatorContainer.appendChild(buttonsContainer);
+  calculatorContainer.appendChild(createInstructions());
+
   // Display
-  // TODO IMPORTANT: import actual display once it is implemented
+
   const display = document.createElement('span');
-  display.textContent = '0';
   setDisplay(display);
+
+  display.textContent = '0';
+
   displayContainer.appendChild(display);
 
-  
-
   // Buttons
-  calculatorContainer.appendChild(displayContainer);
 
   buttonsContainer.appendChild(
     createCalculatorButton(clear, processCalculatorInput),
@@ -105,27 +109,24 @@ export function createCalculatorUI() {
     createCalculatorButton(equals, processCalculatorInput),
   );
 
-  calculatorContainer.appendChild(buttonsContainer);
-  calculatorContainer.appendChild(createInstructions());
-
   return calculatorContainer;
 }
 
 const INSTRUCTIONS_ROWS = [
   [
-    ['AC', 'clears everything'],
-    ['⌫', 'deletes the last digit'],
-    ['0-9', 'digits'],
+    ['AC', 'Clears everything'],
+    ['⌫', 'Deletes the last digit'],
+    ['0-9', 'Digits'],
   ],
   [
-    ['+ - * /', 'operators'],
-    ['Enter', 'equals'],
-    ['Backspace', 'deletes the last digit'],
+    ['+ - * /', 'Operators'],
+    ['Enter', 'Equals'],
+    ['Backspace', 'Deletes the last digit'],
   ],
   [
-    ['C', 'clears everything'],
-    ['.', 'decimal point'],
-    ['Note', 'numbers are rounded to 2 decimals'],
+    ['C', 'Clears everything'],
+    ['.', 'Decimal point'],
+    ['Note', '2 decimals shown'],
   ],
 ];
 
