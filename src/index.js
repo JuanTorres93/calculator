@@ -13,6 +13,14 @@ mainBody.appendChild(calculatorUI);
 function handleKeyboardInput(event) {
   const key = event.key;
 
+  // Space has no calculator action, but browsers natively re-trigger a
+  // click on whichever button still has keyboard focus, causing it to
+  // repeat the last digit (or hit '8' if that's the default focus target).
+  if (key === ' ') {
+    event.preventDefault();
+    return;
+  }
+
   const validInput = mapToValidInput(key);
 
   if (!validInput) return;

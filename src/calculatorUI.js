@@ -127,10 +127,10 @@ const INSTRUCTIONS_ROWS = [
   [
     ['C', 'Clears everything'],
     ['.', 'Decimal point'],
-    ['Space', 'Repeats the last digit'],
+    ['Space', 'Disabled, does nothing'],
   ],
   [
-    ['Decimals', '2 decimals shown'],
+    ['Decimals', 'Rounds to 2 decimals'],
     ['Digits', 'Numbers can have a maximum of 15 digits'],
     ['Big numbers', 'Shown in scientific notation\nEg: 1.23e+9 means 1.23 * 10^9'],
   ],
