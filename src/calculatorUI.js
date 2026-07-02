@@ -130,7 +130,7 @@ const INSTRUCTIONS_ROWS = [
     ['Space', 'Disabled, does nothing'],
   ],
   [
-    ['Decimals', 'Rounds to 2 decimals'],
+    ['Decimals', 'Max 2 decimal digits'],
     ['Digits', 'Numbers can have a maximum of 15 digits'],
     ['Big numbers', 'Shown in scientific notation\nEg: 1.23e+9 means 1.23 * 10^9'],
   ],

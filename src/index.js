@@ -25,9 +25,6 @@ function handleKeyboardInput(event) {
 
   if (!validInput) return;
 
-  // Prevents native browser side effects, e.g. '/' opening the quick-find
-  // menu, or Enter re-triggering a click on whichever button still has
-  // keyboard focus from a previous mouse click.
   event.preventDefault();
 
   showButtonFeedback(validInput);
