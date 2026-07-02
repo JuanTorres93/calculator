@@ -125,11 +125,11 @@ const INSTRUCTIONS_ROWS = [
     ['Backspace', 'Deletes the last digit'],
   ],
   [
-    ['C', 'Clears everything'],
     ['.', 'Decimal point'],
-    ['Note', '2 decimals shown'],
+    ['Digits & Decimals', 'Maximum 15 digits with maximum 2 decimals'],
+    ['Big numbers', 'Shown in scientific notation\nEg: 1.23e+9 means 1.23 * 10^9'],
   ],
-];
+  ];
 
 function createInstructions() {
   const table = document.createElement('table');
@@ -139,7 +139,7 @@ function createInstructions() {
   INSTRUCTIONS_ROWS.forEach((row) => {
     const tr = document.createElement('tr');
 
-    row.forEach(([key, description]) => {
+    row.forEach(([key, description, extraClass]) => {
       const td = document.createElement('td');
 
       const strong = document.createElement('strong');

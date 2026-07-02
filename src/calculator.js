@@ -9,12 +9,25 @@ import {
   isDeleteLastInput,
 } from './validOperations.js';
 
+const MAX_INPUT_DIGITS = 15;
+const MAX_INPUT_DECIMALS = 2;
+
 let currentValue = '0';
 let firstNumber = null;
 let operator = null;
 let waitingForSecondNumber = false;
 let hasError = false;
 let errorCode = null;
+
+function countDigits(value) {
+  return value.replace(/[.-]/g, '').length;
+}
+
+function countDecimalDigits(value) {
+  const decimalIndex = value.indexOf('.');
+  if (decimalIndex === -1) return 0;
+  return value.length - decimalIndex - 1;
+}
 
 export function getCurrentValue() {
   return currentValue;
@@ -34,6 +47,12 @@ export function inputDigit(digit) {
   if (waitingForSecondNumber || currentValue === '0') {
     currentValue = digit;
   } else {
+    if (countDigits(currentValue) >= MAX_INPUT_DIGITS) return;
+    if (
+      hasDecimal() &&
+      countDecimalDigits(currentValue) >= MAX_INPUT_DECIMALS
+    )
+      return;
     currentValue += digit;
   }
 

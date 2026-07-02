@@ -85,6 +85,14 @@
   font-size: var(--text-size-display);
 
   background-color: var(--color-display);
+
+  overflow: hidden;
+}
+
+.calculator__display span {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
 .span-2-columns {
@@ -126,6 +134,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  white-space: pre-line;
 }
 .calculator__instructions strong {
   font-size: 1.6rem;
