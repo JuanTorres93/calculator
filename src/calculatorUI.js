@@ -125,17 +125,11 @@ const INSTRUCTIONS_ROWS = [
     ['Backspace', 'Deletes the last digit'],
   ],
   [
-    ['C', 'Clears everything'],
     ['.', 'Decimal point'],
-    ['Space', 'Disabled, does nothing'],
-  ],
-  [
-    ['Decimals', 'Max 2 decimal digits'],
-    ['Digits', 'Numbers can have a maximum of 15 digits'],
+    ['Digits & Decimals', 'Maximum 15 digits with maximum 2 decimals'],
     ['Big numbers', 'Shown in scientific notation\nEg: 1.23e+9 means 1.23 * 10^9'],
   ],
-
-];
+  ];
 
 function createInstructions() {
   const table = document.createElement('table');
